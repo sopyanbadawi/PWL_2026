@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
 
 
 Route::get('/', function () {
@@ -95,3 +101,25 @@ Route::prefix('admin')->group(function () {
 });
 
 
+//Praktikum 2
+Route::get('/hello', [WelcomeController::class, 'hello'] );
+//6 Modifikasi
+Route::get('/', [PageController::class, 'index']);
+Route::get('/about', [PageController::class, 'about']);
+Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+
+//7 Modifikasi
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'index']);
+
+
+Route::resource('photos', PhotoController::class)->only([
+    'index', 'show'
+]);
+
+
+Route::resource('photos', PhotoController::class)->except([
+    'create', 'store', 'update', 'destroy'
+]);
